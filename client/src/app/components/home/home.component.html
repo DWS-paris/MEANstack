@@ -1,0 +1,15 @@
+<app-add-task (sendNewTaskData)="addNewTask($event)" ></app-add-task>
+
+<section *ngIf="tasksCollection">
+  <h2 (click)="toggleState()" [@itemAnim]>Liste des tâches</h2>
+  <p *ngIf="staggeringTask.length == 0" [@itemAnim]>Rien à faire aujourd'hui, let's dance!</p>
+
+  <article *ngFor="let task of staggeringTask" class="taskListItem" (@itemAnim.done)="doNext()" [@itemAnim]>
+
+    <h2 [ngClass]="{'taskIsDone': task.isDone == true }">{{task.title}}</h2>
+    <i class="fa fa-check-circle" aria-hidden="true" [ngClass]="{'taskIsDone': task.isDone == true}" (click)="updateTask(task)"></i>
+    <i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task._id)"></i>
+
+  </article>
+
+</section>

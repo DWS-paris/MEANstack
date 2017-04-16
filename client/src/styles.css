@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
+
+
+/*
+Reset
+*/
+    *{
+        margin: 0;
+        padding: 0;
+
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    app-header, app-footer{
+        display: block;
+    }
+
+    html{
+        font-size: 62.5%;
+    }
+
+    body{
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 100;
+        text-align: center;
+
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        font-smoothing: antialiased;
+    }
+
+    h1, h2, h3{
+        font-weight: 100;
+    }
+
+    a, .fa, h2{
+        text-decoration: none;
+
+        -moz-transition: all .5s;
+        -webkit-transition: all .5s;
+        transition: all .5s;
+    }
+
+    .fa{
+        cursor: pointer;
+    }
+
+
+/*
+Animation
+*/
+    .animationDelay{
+        -moz-animation-delay: .5s;
+        -webkit-animation-delay: .5s;
+        animation-delay: .5s;
+    }
+
+
+/*
+Header
+*/
+    header{
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 7rem;
+        position: relative;
+    }
+
+    h1 span {
+        display: block;
+        font-weight: 300;
+        font-size: .2em;
+        color: grey;
+    }
+
+
+/*
+Main
+*/
+    main{
+        padding: 2rem;
+    }
+
+    h2 {
+        text-align: left;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: steelblue;
+        margin-bottom: .5rem;
+    }
+
+    h2 span {
+        color: darkred;
+        padding-left: .5rem;
+    }
+
+
+    /*
+    Form
+    */
+        form{
+            margin-bottom: 2rem;
+        }
+
+        form:after, article:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            border-radius: .5rem;
+            border: none;
+            font-size: 2rem;
+            font-family: inherit;
+            width: 88%;
+            float: left;
+            background-color: #eee;
+        }
+
+        button[type="submit"] {
+            border: none;
+            background: none;
+            font-size: 4rem;
+
+            width: 10%;
+            float: right;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .fa-plus:hover {
+            color: steelblue;
+        }
+
+        .errorAddTask{
+            color: red;
+        }
+
+        
+    
+    /*
+    Task liste
+    */
+        .taskListItem{
+            margin: 2rem auto;
+            padding-bottom: 1rem;
+            border-bottom: .1rem dotted rgba(0, 0, 0, .1);   
+        }
+
+        .taskListItem.close{
+            height: 0;
+        }
+
+        .taskListItem h2 {
+            font-size: 2rem;
+            font-weight: 200;
+            text-transform: none;
+            color: black;
+            float: left;
+            width: 88%;
+
+            -moz-transition: all .5s;
+            -webkit-transition: all .5s;
+            transition: all .5s;
+        }
+
+        .taskListItem .fa {
+            font-size: 2rem;
+            padding-left: 1rem;
+            color: grey;
+        }
+
+        h2 + p {
+            font-size: 2rem;
+            font-style: italic;
+            font-weight: 200;
+            color: grey;
+            padding-top: 1rem;
+            text-align: left;
+        }
+
+        .taskListItem .taskIsDone{
+            opacity: .3;
+        }
+
+        .fa-check-circle:hover {
+            color: seagreen;
+        }
+
+        .fa-trash:hover {
+            color: darkred;
+        }
+
+
+
+/*
+Footer
+*/
+
+    app-footer {
+        font-size: 1rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        width: 100%;
+        background: #eee;
+        padding: 1rem;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    footer a{
+        font-weight: 500;
+        color: black;
+    }
