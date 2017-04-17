@@ -60,8 +60,10 @@ var MongodbService = (function () {
     function MongodbService(http) {
         this.http = http;
         // Définition des adresses de l'API => routes/api.js
-        this.getCategoriesUrl = 'https://dwsapp.fr/api/tasks';
-        this.editTaskUrl = 'https://dwsapp.fr/api/task';
+        // private getCategoriesUrl = 'https://dwsapp.fr/api/tasks';
+        // private editTaskUrl = 'https://dwsapp.fr/api/task';
+        this.getCategoriesUrl = 'http://localhost:8080/api/tasks';
+        this.editTaskUrl = 'http://localhost:8080/api/task';
     }
     // Fonction pour ajouter une tâche dans la BDD MongoDb
     MongodbService.prototype.addNewTask = function (newTask) {

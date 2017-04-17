@@ -10,8 +10,11 @@ export class MongodbService {
   constructor ( private http: Http ) {}
 
   // Définition des adresses de l'API => routes/api.js
-  private getCategoriesUrl = 'https://dwsapp.fr/api/tasks'
-  private editTaskUrl = 'https://dwsapp.fr/api/task'
+    // private getCategoriesUrl = 'https://dwsapp.fr/api/tasks';
+    // private editTaskUrl = 'https://dwsapp.fr/api/task';
+
+  private getCategoriesUrl = 'http://localhost:8080/api/tasks';
+  private editTaskUrl = 'http://localhost:8080/api/task';
 
 
 
