@@ -60,8 +60,8 @@ var MongodbService = (function () {
     function MongodbService(http) {
         this.http = http;
         // Définition des adresses de l'API => routes/api.js
-        this.getCategoriesUrl = 'http://localhost:3000/api/tasks';
-        this.editTaskUrl = 'http://localhost:3000/api/task';
+        this.getCategoriesUrl = 'https://localhost:3000/api/tasks';
+        this.editTaskUrl = 'https://localhost:3000/api/task';
     }
     // Fonction pour ajouter une tâche dans la BDD MongoDb
     MongodbService.prototype.addNewTask = function (newTask) {

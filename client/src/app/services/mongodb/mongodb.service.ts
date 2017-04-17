@@ -10,8 +10,8 @@ export class MongodbService {
   constructor ( private http: Http ) {}
 
   // Définition des adresses de l'API => routes/api.js
-  private getCategoriesUrl = 'http://localhost:3000/api/tasks'
-  private editTaskUrl = 'http://localhost:3000/api/task'
+  private getCategoriesUrl = 'https://localhost:3000/api/tasks'
+  private editTaskUrl = 'https://localhost:3000/api/task'
 
 
 
