@@ -6,7 +6,7 @@
     var front = require('./routes/front');
     var api = require('./routes/api');
 
-    var port = 3000;
+    var port = 8080;
     var app = express();
 
 // Moteur de rendu
