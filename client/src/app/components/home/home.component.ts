@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.mongodbService.addNewTask(newTask).then( (mongoNewTask) =>{
 
       // callBack => Actualiser la liste des tâches
-      this.tasksCollection.push(mongoNewTask)
+      this.staggeringTask.push(mongoNewTask[(mongoNewTask.length - 1)])
 
       // callBack => Lancer l'animation des tâches
       this.doNext();
@@ -63,12 +63,23 @@ export class HomeComponent implements OnInit {
 
   // Fonction pour supprimer une tâche
   deleteTask(id){
-
+    
     // Appel de la fonction du service deleteTask()
     this.mongodbService.deleteTask(id).then(data => {
 
+
+      for( var i = 0; i < this.staggeringTask.length; i++ ){
+
+        if(this.staggeringTask[i]._id == id){
+
+          this.staggeringTask.splice(i, 1)
+
+        }
+
+      }
+
       // callBack => Actualiser la liste des tâches
-      this.updateTasks();
+      // this.updateTasks();
 
     });
   }
@@ -86,7 +97,15 @@ export class HomeComponent implements OnInit {
     this.mongodbService.updateTask(_task).then(data => {
       
       // callBack => Actualiser la liste des tâches
-      this.updateTasks();
+      for( var i = 0; i < this.staggeringTask.length; i++ ){
+
+        if(this.staggeringTask[i]._id == task._id){
+
+          this.staggeringTask[i].isDone = !this.staggeringTask[i].isDone
+
+        }
+
+      }
 
     });
   }

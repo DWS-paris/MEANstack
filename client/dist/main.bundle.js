@@ -273,7 +273,7 @@ var HomeComponent = (function () {
         // Appel de la fonction du service addNewTask()
         this.mongodbService.addNewTask(newTask).then(function (mongoNewTask) {
             // callBack => Actualiser la liste des tâches
-            _this.tasksCollection.push(mongoNewTask);
+            _this.staggeringTask.push(mongoNewTask[(mongoNewTask.length - 1)]);
             // callBack => Lancer l'animation des tâches
             _this.doNext();
         });
@@ -283,8 +283,13 @@ var HomeComponent = (function () {
         var _this = this;
         // Appel de la fonction du service deleteTask()
         this.mongodbService.deleteTask(id).then(function (data) {
+            for (var i = 0; i < _this.staggeringTask.length; i++) {
+                if (_this.staggeringTask[i]._id == id) {
+                    _this.staggeringTask.splice(i, 1);
+                }
+            }
             // callBack => Actualiser la liste des tâches
-            _this.updateTasks();
+            // this.updateTasks();
         });
     };
     // Fonction pour mettre à jour une tâche
@@ -295,7 +300,11 @@ var HomeComponent = (function () {
         // Appel de la fonction du service updateTask()
         this.mongodbService.updateTask(_task).then(function (data) {
             // callBack => Actualiser la liste des tâches
-            _this.updateTasks();
+            for (var i = 0; i < _this.staggeringTask.length; i++) {
+                if (_this.staggeringTask[i]._id == task._id) {
+                    _this.staggeringTask[i].isDone = !_this.staggeringTask[i].isDone;
+                }
+            }
         });
     };
     // Fonction pour afficher les tâches

@@ -7,6 +7,11 @@ let MongoClient = mongodb.MongoClient;
 let mongodbUrl = 'mongodb://localhost:27017/tasks';
 
 
+function getAllTasks(){
+    
+}
+
+
 router.get('/tasks', (req, res, next) => {
 
     MongoClient.connect(mongodbUrl, (err, db) =>{
@@ -54,7 +59,30 @@ router.post('/task', (req, res, next) => {
                         console.log('error')
 
                     } else{
-                        res.redirect('tasks')
+                        console.log('ok add')
+                        db.close()
+
+                        MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                            if(err){
+                                console.log('error connect', err)
+                            
+                            } else{
+                                db.collection('list').find().toArray((err, tasks) => {
+
+                                    if(err){ 
+                                        res.send(err)
+
+                                    } else{ 
+
+                                        console.log('ok update')
+                                        res.json(tasks)
+                                    }
+                                })
+                            }
+
+                            db.close();
+                        })
                     }
 
                 })
@@ -68,8 +96,6 @@ router.post('/task', (req, res, next) => {
 // Supprimer une tâche
 router.delete('/task/:id', function(req, res, next){
 
-    console.log(req.params.id)
-
     MongoClient.connect(mongodbUrl, (err, db) =>{
 
         if(err){
@@ -82,13 +108,35 @@ router.delete('/task/:id', function(req, res, next){
                     console.log('error')
 
                 } else{
-                    console.log("ok")
+                    console.log("ok delete")
+
+                    db.close();
+                    
+                    MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                        if(err){
+                            console.log('error connect', err)
+                        
+                        } else{
+                            db.collection('list').find().toArray((err, tasks) => {
+
+                                if(err){ 
+                                    res.send(err)
+
+                                } else{ 
+                                    res.json(tasks)
+                                }
+                            })
+                        }
+
+                        db.close();
+                    })
                 }
 
             })
         }
 
-        db.close();
+        
     })
 
 });
@@ -126,7 +174,27 @@ router.put('/task/:id', (req, res, next) => {
                         console.log('error')
 
                     } else{
-                        console.log("ok")
+                        console.log("ok update")
+
+                        MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                            if(err){
+                                console.log('error connect', err)
+                            
+                            } else{
+                                db.collection('list').find().toArray((err, tasks) => {
+
+                                    if(err){ 
+                                        res.send(err)
+
+                                    } else{ 
+                                        res.json(tasks)
+                                    }
+                                })
+                            }
+
+                            db.close();
+                        })
                     }
 
                 })
