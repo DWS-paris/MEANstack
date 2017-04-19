@@ -1,208 +1,247 @@
-let express = require('express');
-let router = express.Router();
+// Configuration du module
+    let express = require('express');
+    let router = express.Router();
 
-let mongodb = require('mongodb');
-let ObjectId = mongodb.ObjectID;
-let MongoClient = mongodb.MongoClient;
-let mongodbUrl = 'mongodb://localhost:27017/tasks';
-
-
-function getAllTasks(){
-    
-}
+// Configuration de la base MongoDb
+    let mongodb = require('mongodb');
+    let ObjectId = mongodb.ObjectID;
+    let MongoClient = mongodb.MongoClient;
+    let mongodbUrl = 'mongodb://localhost:27017/tasks';
 
 
-router.get('/tasks', (req, res, next) => {
 
-    MongoClient.connect(mongodbUrl, (err, db) =>{
 
-        if(err){
-            console.log('error connect', err)
-        
-        } else{
-            db.collection('list').find().toArray((err, tasks) => {
+/*
+Configuration de la route pour afficher la liste des tâches => get
+*/
+    router.get('/tasks', (req, res, next) => {
 
-                if(err){ 
-                    res.send(err)
+        // Ouvrir une connexion sur la base MongoDb
+        MongoClient.connect(mongodbUrl, (err, db) =>{
 
-                } else{ 
-                    res.json(tasks)
+            // Tester la connexion
+            if(err){ res.send(err) } 
+            else {
+
+                // Récupération des documents de la collection 'list' => find
+                db.collection('list').find().toArray((err, tasks) => {
+
+                    // Tester la commande MongoDb
+                    if(err){ res.send(err) }
+
+                    else{ 
+                        // Envoyer les données au format json
+                        res.json(tasks)
+                    }
+                })
+            }
+
+            // Fermer la connexion à la base MongoDb
+            db.close();
+        })
+    });
+
+
+
+
+
+/*
+Configuration de la route pour ajouter une tâche => post
+*/
+    router.post('/task', (req, res, next) => {
+
+        // Récupération des données depuis la requête
+        let task = req.body;
+
+        // Vérifier la présence de valeur dans la requête
+        if(!task.title || !(task.isDone + '')){
+            res.status(400);
+            res.json({ "error": "Bad Data" });
+
+        } else {
+
+            // Ouvrir une connexion sur la base MongoDb
+            MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                // Tester la connexion
+                if(err){ res.send(err); db.close(); } 
+                else{
+
+                    // Ajouter un document dans la collection 'list' => insert
+                    db.collection('list').insert([task], (err, data) => {
+
+                        // Vérification de a commande MongoDb
+                        if(err){ console.log('error') } 
+                        else{
+
+                            // Fermer la connexion à la base MongoDb
+                            db.close()
+
+                            // Ouvrir une connexion sur la base MongoDb
+                            MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                                // Tester la connexion
+                                if(err){ res.send(err) } 
+                                else{
+
+                                    // Récupération des documents de la collection 'list' => find
+                                    db.collection('list').find().toArray((err, tasks) => {
+
+                                        // Tester la connexion
+                                        if(err){ res.send(err) } 
+                                        else{ 
+
+                                            // Envoyer les données au format json
+                                            res.json(tasks)
+                                        }
+                                    })
+                                }
+
+                                // Fermer la connexion à la base MongoDb
+                                db.close();
+                            })
+                        }
+                    })
                 }
             })
         }
-
-        db.close();
-    })
-
-});
+    });
 
 
-// Ajouter une tâche => http.post
-router.post('/task', (req, res, next) => {
-    let task = req.body;
-    if(!task.title || !(task.isDone + '')){
-        res.status(400);
-        res.json({
-            "error": "Bad Data"
-        });
-    } else {
 
+
+
+
+
+/*
+Configuration de la route pour supprimer une tâche => delete
+*/
+    router.delete('/task/:id', function(req, res, next){
+
+        // Ouvrir une connexion sur la base MongoDb
         MongoClient.connect(mongodbUrl, (err, db) =>{
 
-            if(err){
-                console.log('error connect', err)
-            
-            } else{
-                db.collection('list').insert([task], (err, data) => {
+            // Tester la connexion
+            if(err){ res.send(err) } 
+            else{
 
-                    if(err){
-                        console.log('error')
+                // Supprimer un document dans la collection 'list' => remove
+                db.collection('list').remove({ _id: new ObjectId(req.params.id) }, (err, data) => {
 
-                    } else{
-                        console.log('ok add')
-                        db.close()
+                    // Tester la commande MongoDb
+                    if(err){ console.log('error'); db.close(); } 
+                    else{
 
+                        // Fermer la connexion à la base MongoDb
+                        db.close();
+                        
+                        // Ouvrir une connexion sur la base MongoDb => connect
                         MongoClient.connect(mongodbUrl, (err, db) =>{
 
-                            if(err){
-                                console.log('error connect', err)
-                            
-                            } else{
+                            // Tester la connexion
+                            if(err){ res.send(err) } 
+                            else{
+
+                                // Récupération des documents de la collection 'list' => find
                                 db.collection('list').find().toArray((err, tasks) => {
 
-                                    if(err){ 
-                                        res.send(err)
+                                    // Tester la commande MongoDb
+                                    if(err){ res.send(err) } 
+                                    else{ 
 
-                                    } else{ 
-
-                                        console.log('ok update')
+                                        // Envoyer les données au format json
                                         res.json(tasks)
                                     }
                                 })
                             }
 
+                            // Fermer la connexion à la base MongoDb => close
                             db.close();
                         })
                     }
-
                 })
-            }
-
-            db.close();
+            }            
         })
-    }
-});
+    });
 
-// Supprimer une tâche
-router.delete('/task/:id', function(req, res, next){
 
-    MongoClient.connect(mongodbUrl, (err, db) =>{
 
-        if(err){
-            console.log('error connect', err)
+
+
+
+
+/*
+Configuration de la route pour mettre à jour une tâche => put
+*/
+    router.put('/task/:id', (req, res, next) => {
+        // Récupération des données depuis la requête
+        let task = req.body;
+
+        // Définition d'un objet pour analyser les données de la requête
+        let updTask = {};
         
-        } else{
-            db.collection('list').remove({ _id: new ObjectId(req.params.id) }, (err, data) => {
+        // Assignation des valeurs de la requête dans l'objet
+        if(task.isDone){ updTask.isDone = task.isDone; }
+        if(task.title){ updTask.title = task.title; }
 
-                if(err){
-                    console.log('error')
+        // Vérifier la présence de valeur dans la requête
+        if(!updTask){
+            res.status(400);
+            res.json({
+                "error":"Bad Data"
+            });
 
-                } else{
-                    console.log("ok delete")
+        } else {
 
-                    db.close();
-                    
-                    MongoClient.connect(mongodbUrl, (err, db) =>{
+            // Ouvrir une connexion sur la base MongoDb => connect
+            MongoClient.connect(mongodbUrl, (err, db) =>{
 
-                        if(err){
-                            console.log('error connect', err)
-                        
-                        } else{
-                            db.collection('list').find().toArray((err, tasks) => {
+                // Tester la connexion
+                if(err){ res.send(err) } 
+                else{
 
-                                if(err){ 
-                                    res.send(err)
+                    // Mettre à jour un document dans la collection 'list' => update
+                    db.collection('list').update({ _id: new ObjectId(req.params.id) },updTask, {}, (err, data) => {
 
-                                } else{ 
-                                    res.json(tasks)
-                                }
+
+                        // Tester la commande MongoDb
+                        if(err){ res.send(err) } 
+                        else{
+                            
+                            // Fermer la connexion à la base MongoDb => close
+                            db.close();
+                            
+                            // Ouvrir une connexion sur la base MongoDb => connect
+                            MongoClient.connect(mongodbUrl, (err, db) =>{
+
+                                // Tester la connexion
+                                if(err){ res.send(err) } 
+                                else{
+
+                                    // Récupération des documents de la collection 'list' => find
+                                    db.collection('list').find().toArray((err, tasks) => {
+
+                                        // Tester la commande MongoDb
+                                        if(err){ res.send(err) } 
+                                        else{ 
+
+                                            // Envoyer les données au format json
+                                            res.json(tasks)
+                                        }
+                                    })
+
+                                    // Fermer la connexion à la base MongoDb => close
+                                    db.close();
+                                }                                
                             })
                         }
 
-                        db.close();
                     })
                 }
-
             })
         }
+    });
 
-        
-    })
 
-});
-
-// Mettre à jour une tâche
-router.put('/task/:id', (req, res, next) => {
-    let task = req.body;
-    let updTask = {};
-    
-    if(task.isDone){
-        updTask.isDone = task.isDone;
-    }
-    
-    if(task.title){
-        updTask.title = task.title;
-    }
-    
-    if(!updTask){
-        res.status(400);
-        res.json({
-            "error":"Bad Data"
-        });
-
-    } else {
-
-        MongoClient.connect(mongodbUrl, (err, db) =>{
-
-            if(err){
-                console.log('error connect', err)
-            
-            } else{
-                db.collection('list').update({ _id: new ObjectId(req.params.id) },updTask, {}, (err, data) => {
-
-                    if(err){
-                        console.log('error')
-
-                    } else{
-                        console.log("ok update")
-
-                        MongoClient.connect(mongodbUrl, (err, db) =>{
-
-                            if(err){
-                                console.log('error connect', err)
-                            
-                            } else{
-                                db.collection('list').find().toArray((err, tasks) => {
-
-                                    if(err){ 
-                                        res.send(err)
-
-                                    } else{ 
-                                        res.json(tasks)
-                                    }
-                                })
-                            }
-
-                            db.close();
-                        })
-                    }
-
-                })
-            }
-
-            db.close();
-        })
-    }
-});
-
+// Exporter le module
 module.exports = router;

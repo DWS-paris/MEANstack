@@ -1,11 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component} from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+
+// Désactiver le mode développement
+// import {enableProdMode} from '@angular/core';
+// enableProdMode();
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 
-   // Définition des animations
+  // Définition des animations
   animations: [
     trigger('header', [
       transition(':enter', [ style({opacity: '0', transform: 'translateY(-10px)'}), animate('.3s ease-out') ]),
@@ -23,10 +27,4 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])
   ]
 })
-export class AppComponent {
-
-  private loadMain(){
-    console.log('load main')
-  }
-
-}
+export class AppComponent {}

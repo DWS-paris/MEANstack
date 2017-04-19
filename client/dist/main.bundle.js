@@ -430,12 +430,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
+// Désactiver le mode développement
+// import {enableProdMode} from '@angular/core';
+// enableProdMode();
 var AppComponent = (function () {
     function AppComponent() {
     }
-    AppComponent.prototype.loadMain = function () {
-        console.log('load main');
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([

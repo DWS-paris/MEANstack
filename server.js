@@ -1,16 +1,14 @@
 // Configuration du server
-    var express = require('express');
-    var path = require('path');
-    var bodyParser = require('body-parser');
+    let express = require('express');
+    let path = require('path');
+    let bodyParser = require('body-parser');
 
-    var front = require('./routes/front');
-    var api = require('./routes/api');
+    let front = require('./routes/front');
+    let api = require('./routes/api');
 
-    var port = 8080;
-    var app = express();
+    let port = 8080;
+    let app = express();
 
-// Configuration de MongoDB
-    // let mongo = require('mongodb');
 
 // Moteur de rendu
     app.set('views', path.join(__dirname, 'client/dist'));
@@ -29,6 +27,6 @@
     app.use('/api', api);
 
 // Lancer le server
-    app.listen(port, function(){
+    app.listen(port, () => {
         console.log('Server started on port ' + port);
     });
