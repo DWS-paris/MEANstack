@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { MongodbService } from '../../services/mongodb/mongodb.service'
+import { MongodbService } from '../../services/mongodb/mongodb.service';
+import { AppTranslate } from '../../app.translate';
 
 @Component({
   selector: 'app-home',
@@ -20,147 +21,131 @@ import { MongodbService } from '../../services/mongodb/mongodb.service'
 
 export class HomeComponent implements OnInit {
 
-  constructor(
-
-    // Définition d'une variable pour utiliser le service
-    private mongodbService: MongodbService
-
-  ) {}
+  constructor( private mongodbService: MongodbService ) {}
 
   // Définition des variables
-  private title: string;
-  private tasksCollection: any[];
+    private taskList = AppTranslate.TASK_LIST;
+    private emptyTaskList = AppTranslate.EMPTY_TASK_LIST;
+    private title: string;
+    private tasksCollection: any[];
+    private singleTask: any;
+    private errorAddTask: boolean = false;
 
-  // Variables nécessaires pour l'animation des tâches
-  private staggeringTask: any[] = [];
-  private next: number = 0;
+    // Variables nécessaires pour l'animation des tâches
+    private staggeringTask: any[] = [];
+    private next: number = 0;
 
-  private singleTask: any;
-  private errorAddTask: boolean = false;
-  private animation: boolean = false;
+  
 
 
   // Fonction pour ajouter une tâche
-  private addNewTask(taskTitle: any){
+    private addNewTask(taskTitle: any){
 
-    // Défintion de l'objet newTask
-    let newTask = { title: taskTitle, isDone: false }
-    
-    // Appel de la fonction du service addNewTask()
-    this.mongodbService.addNewTask(newTask).then( (mongoNewTask) =>{
-
-      // callBack => Actualiser la liste des tâches
-      this.staggeringTask.push(mongoNewTask[(mongoNewTask.length - 1)])
-
-      // callBack => Lancer l'animation des tâches
-      this.doNext();
+      // Défintion de l'objet newTask
+      let newTask = { title: taskTitle, isDone: false }
       
-    });
+      // Appel de la fonction du service addNewTask()
+      this.mongodbService.addNewTask(newTask).then( (mongoNewTask) =>{
 
-  }
+        // callBack => Actualiser la liste des tâches
+        this.showTasks()
 
+        // callBack => Lancer l'animation des tâches
+        this.doNext();
+        
+      });
+
+    }
 
 
   // Fonction pour supprimer une tâche
-  deleteTask(id){
-    
-    // Appel de la fonction du service deleteTask()
-    this.mongodbService.deleteTask(id).then(data => {
+    deleteTask(id){
+      
+      // Appel de la fonction du service deleteTask()
+      this.mongodbService.deleteTask(id).then(data => {
 
+        this.updateTasks()
 
-      for( var i = 0; i < this.staggeringTask.length; i++ ){
-
-        if(this.staggeringTask[i]._id == id){
-
-          this.staggeringTask.splice(i, 1)
-
-        }
-
-      }
-
-      // callBack => Actualiser la liste des tâches
-      // this.updateTasks();
-
-    });
-  }
+      })
+    }
 
   
 
 
   // Fonction pour mettre à jour une tâche
-  updateTask(task){
+    updateTask(task){
 
-    // Définition d'une variable pour mettre à jour les données de la tâche
-    let _task = { _id:task._id, title: task.title, isDone: !task.isDone };
+      // Définition d'une variable pour mettre à jour les données de la tâche
+      let _task = { _id:task._id, title: task.title, isDone: !task.isDone };
 
-    // Appel de la fonction du service updateTask()
-    this.mongodbService.updateTask(_task).then(data => {
-      
-      // callBack => Actualiser la liste des tâches
-      for( var i = 0; i < this.staggeringTask.length; i++ ){
+      // Appel de la fonction du service updateTask()
+      this.mongodbService.updateTask(_task).then(data => {
+        
+        // callBack => Actualiser la liste des tâches
+        for( var i = 0; i < this.staggeringTask.length; i++ ){
 
-        if(this.staggeringTask[i]._id == task._id){
+          if(this.staggeringTask[i]._id == task._id){
 
-          this.staggeringTask[i].isDone = !this.staggeringTask[i].isDone
+            this.staggeringTask[i].isDone = !this.staggeringTask[i].isDone
+
+          }
 
         }
 
-      }
-
-    });
-  }
+      })
+    }
 
 
 
   // Fonction pour afficher les tâches
-  private showTasks(){
+    private showTasks(){
 
-    // Appel de la fonction du service getAllTasks()
-    this.mongodbService.getAllTasks().then(data => {
-      
-      // callBack => Afficher les données dans la vue
-      this.tasksCollection = data;
+      // Appel de la fonction du service getAllTasks()
+      this.mongodbService.getAllTasks().then(data => {
+        
+        // callBack => Afficher les données dans la vue
+        this.tasksCollection = data;
 
-      // callBack => Lancer l'animation des tâches
-      this.doNext();
+        // callBack => Lancer l'animation des tâches
+        this.doNext();
 
-    });
+      });
 
-  }
+    }
 
   // Fonction pour mettre à jour la liste de tâches
-  private updateTasks(){
+    private updateTasks(){
 
-    // Appel de la fonction du service getAllTasks()
-    this.mongodbService.getAllTasks().then(data => {
+      // Appel de la fonction du service getAllTasks()
+      this.mongodbService.getAllTasks().then(data => {
 
-      // callBack => Mettre à jour les données dans la vue
-      this.staggeringTask = data;
+        // callBack => Mettre à jour les données dans la vue
+        this.tasksCollection = data;
 
-    });
+        // callBack => Lancer l'animation des tâches
+        this.doNext();
 
-  }
+      });
+
+    }
 
 
 
   // Création d'une fonction pour animer la liste de tâches
-  private doNext(){
-    if(this.next < this.tasksCollection.length) {
-      this.staggeringTask.push(this.tasksCollection[this.next++]);
+    private doNext(){
+
+      if(this.next < this.tasksCollection.length) {
+        this.staggeringTask.push(this.tasksCollection[this.next++]);
+      }
     }
-  }
 
 
 
   // callBack => Le composant est chargé
-  ngOnInit() {
+    ngOnInit() {
+      // Afficher la liste de tâches
+      this.showTasks();
 
-    // Afficher la liste de tâches
-    this.showTasks();
-    
-    
-
-  }
-
+    }
 
 }

@@ -1,6 +1,6 @@
 <section>
 
-  <h2 [ngClass]="{'errorAddTask': errorAddTask == true}">Ajouter une tâche</h2>
+  <h2 [ngClass]="{'errorAddTask': errorAddTask == true}">{{addTask}}</h2>
   <form action="#" (submit)="addNewTask(newTask)">
     <input type="text" name="newtask" [(ngModel)]="newTask" (focus)="errorAddTask = false" >
     <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>

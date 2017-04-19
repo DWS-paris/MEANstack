@@ -38,7 +38,7 @@ Reset
         font-weight: 100;
     }
 
-    a, .fa, h2{
+    a, .fa, h2, .taskListItem{
         text-decoration: none;
 
         -moz-transition: all .5s;
@@ -157,11 +157,17 @@ Main
         .taskListItem{
             margin: 2rem auto;
             padding-bottom: 1rem;
-            border-bottom: .1rem dotted rgba(0, 0, 0, .1);   
+            border-bottom: .1rem dotted rgba(0, 0, 0, .1);
         }
 
-        .taskListItem.close{
+        .taskListItem.erase{
             height: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+            float: left;
+            width: 100%;
+            overflow: hidden;
         }
 
         .taskListItem h2 {

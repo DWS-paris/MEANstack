@@ -1,0 +1,3 @@
+<h2 [ngClass]="{'taskIsDone': task.isDone == true }">{{task.title}}</h2>
+<i class="fa fa-check-circle" aria-hidden="true" [ngClass]="{'taskIsDone': task.isDone == true}" (click)="updateTask(task)"></i>
+<i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task._id); task.eraseTask = true"></i>

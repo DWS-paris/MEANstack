@@ -3,16 +3,73 @@ webpackJsonp([2,4],{
 /***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(50)();
+exports = module.exports = __webpack_require__(156)();
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);", ""]);
 exports.push([module.i, "@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);", ""]);
 exports.push([module.i, "@import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css);", ""]);
 
 // module
-exports.push([module.i, "/*\nReset\n*/\n    *{\n        margin: 0;\n        padding: 0;\n        box-sizing: border-box;\n    }\n\n    app-header, app-footer{\n        display: block;\n    }\n\n    html{\n        font-size: 62.5%;\n    }\n\n    body{\n        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 1.5rem;\n        font-weight: 100;\n        text-align: center;\n\n        -webkit-font-smoothing: antialiased;\n        -moz-font-smoothing: antialiased;\n        font-smoothing: antialiased;\n    }\n\n    h1, h2, h3{\n        font-weight: 100;\n    }\n\n    a, .fa, h2{\n        text-decoration: none;\n        -webkit-transition: all .5s;\n        transition: all .5s;\n    }\n\n    .fa{\n        cursor: pointer;\n    }\n\n\n/*\nAnimation\n*/\n    .animationDelay{\n        -webkit-animation-delay: .5s;\n        animation-delay: .5s;\n    }\n\n\n/*\nHeader\n*/\n    header{\n        padding: 2rem;\n    }\n\n    h1 {\n        font-size: 7rem;\n        position: relative;\n    }\n\n    h1 span {\n        display: block;\n        font-weight: 300;\n        font-size: .2em;\n        color: grey;\n    }\n\n\n/*\nMain\n*/\n    main{\n        padding: 2rem;\n    }\n\n    h2 {\n        text-align: left;\n        font-size: 1rem;\n        font-weight: 500;\n        text-transform: uppercase;\n        color: steelblue;\n        margin-bottom: .5rem;\n    }\n\n    h2 span {\n        color: darkred;\n        padding-left: .5rem;\n    }\n\n\n    /*\n    Form\n    */\n        form{\n            margin-bottom: 2rem;\n        }\n\n        form:after, article:after{\n            content: '';\n            display: block;\n            clear: both;\n        }\n\n        input[type=\"text\"] {\n            width: 100%;\n            padding: 1rem;\n            border-radius: .5rem;\n            border: none;\n            font-size: 2rem;\n            font-family: inherit;\n            width: 88%;\n            float: left;\n            background-color: #eee;\n        }\n\n        button[type=\"submit\"] {\n            border: none;\n            background: none;\n            font-size: 4rem;\n\n            width: 10%;\n            float: right;\n        }\n\n        button:focus {\n            outline: none;\n        }\n\n        .fa-plus:hover {\n            color: steelblue;\n        }\n\n        .errorAddTask{\n            color: red;\n        }\n\n        \n    \n    /*\n    Task liste\n    */\n        .taskListItem{\n            margin: 2rem auto;\n            padding-bottom: 1rem;\n            border-bottom: .1rem dotted rgba(0, 0, 0, .1);   \n        }\n\n        .taskListItem.close{\n            height: 0;\n        }\n\n        .taskListItem h2 {\n            font-size: 2rem;\n            font-weight: 200;\n            text-transform: none;\n            color: black;\n            float: left;\n            width: 88%;\n            -webkit-transition: all .5s;\n            transition: all .5s;\n        }\n\n        .taskListItem .fa {\n            font-size: 2rem;\n            padding-left: 1rem;\n            color: grey;\n        }\n\n        h2 + p {\n            font-size: 2rem;\n            font-style: italic;\n            font-weight: 200;\n            color: grey;\n            padding-top: 1rem;\n            text-align: left;\n        }\n\n        .taskListItem .taskIsDone{\n            opacity: .3;\n        }\n\n        .fa-check-circle:hover {\n            color: seagreen;\n        }\n\n        .fa-trash:hover {\n            color: darkred;\n        }\n\n\n\n/*\nFooter\n*/\n\n    app-footer {\n        font-size: 1rem;\n        font-weight: 300;\n        text-transform: uppercase;\n        width: 100%;\n        background: #eee;\n        padding: 1rem;\n\n        position: fixed;\n        bottom: 0;\n        left: 0;\n    }\n\n    footer a{\n        font-weight: 500;\n        color: black;\n    }", ""]);
+exports.push([module.i, "/*\nReset\n*/\n    *{\n        margin: 0;\n        padding: 0;\n        box-sizing: border-box;\n    }\n\n    app-header, app-footer{\n        display: block;\n    }\n\n    html{\n        font-size: 62.5%;\n    }\n\n    body{\n        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 1.5rem;\n        font-weight: 100;\n        text-align: center;\n\n        -webkit-font-smoothing: antialiased;\n        -moz-font-smoothing: antialiased;\n        font-smoothing: antialiased;\n    }\n\n    h1, h2, h3{\n        font-weight: 100;\n    }\n\n    a, .fa, h2, .taskListItem{\n        text-decoration: none;\n        -webkit-transition: all .5s;\n        transition: all .5s;\n    }\n\n    .fa{\n        cursor: pointer;\n    }\n\n\n/*\nAnimation\n*/\n    .animationDelay{\n        -webkit-animation-delay: .5s;\n        animation-delay: .5s;\n    }\n\n\n/*\nHeader\n*/\n    header{\n        padding: 2rem;\n    }\n\n    h1 {\n        font-size: 7rem;\n        position: relative;\n    }\n\n    h1 span {\n        display: block;\n        font-weight: 300;\n        font-size: .2em;\n        color: grey;\n    }\n\n\n/*\nMain\n*/\n    main{\n        padding: 2rem;\n    }\n\n    h2 {\n        text-align: left;\n        font-size: 1rem;\n        font-weight: 500;\n        text-transform: uppercase;\n        color: steelblue;\n        margin-bottom: .5rem;\n    }\n\n    h2 span {\n        color: darkred;\n        padding-left: .5rem;\n    }\n\n\n    /*\n    Form\n    */\n        form{\n            margin-bottom: 2rem;\n        }\n\n        form:after, article:after{\n            content: '';\n            display: block;\n            clear: both;\n        }\n\n        input[type=\"text\"] {\n            width: 100%;\n            padding: 1rem;\n            border-radius: .5rem;\n            border: none;\n            font-size: 2rem;\n            font-family: inherit;\n            width: 88%;\n            float: left;\n            background-color: #eee;\n        }\n\n        button[type=\"submit\"] {\n            border: none;\n            background: none;\n            font-size: 4rem;\n\n            width: 10%;\n            float: right;\n        }\n\n        button:focus {\n            outline: none;\n        }\n\n        .fa-plus:hover {\n            color: steelblue;\n        }\n\n        .errorAddTask{\n            color: red;\n        }\n\n        \n    \n    /*\n    Task liste\n    */\n        .taskListItem{\n            margin: 2rem auto;\n            padding-bottom: 1rem;\n            border-bottom: .1rem dotted rgba(0, 0, 0, .1);\n        }\n\n        .taskListItem.erase{\n            height: 0;\n            padding: 0;\n            margin: 0;\n            border: none;\n            float: left;\n            width: 100%;\n            overflow: hidden;\n        }\n\n        .taskListItem h2 {\n            font-size: 2rem;\n            font-weight: 200;\n            text-transform: none;\n            color: black;\n            float: left;\n            width: 88%;\n            -webkit-transition: all .5s;\n            transition: all .5s;\n        }\n\n        .taskListItem .fa {\n            font-size: 2rem;\n            padding-left: 1rem;\n            color: grey;\n        }\n\n        h2 + p {\n            font-size: 2rem;\n            font-style: italic;\n            font-weight: 200;\n            color: grey;\n            padding-top: 1rem;\n            text-align: left;\n        }\n\n        .taskListItem .taskIsDone{\n            opacity: .3;\n        }\n\n        .fa-check-circle:hover {\n            color: seagreen;\n        }\n\n        .fa-trash:hover {\n            color: darkred;\n        }\n\n\n\n/*\nFooter\n*/\n\n    app-footer {\n        font-size: 1rem;\n        font-weight: 300;\n        text-transform: uppercase;\n        width: 100%;\n        background: #eee;\n        padding: 1rem;\n\n        position: fixed;\n        bottom: 0;\n        left: 0;\n    }\n\n    footer a{\n        font-weight: 500;\n        color: black;\n    }", ""]);
 
 // exports
+
+
+/***/ }),
+
+/***/ 156:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
 
 
 /***/ }),
@@ -273,69 +330,12 @@ function updateLink(linkElement, obj) {
 /***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(88);
+module.exports = __webpack_require__(87);
 
 
 /***/ }),
 
-/***/ 50:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-
-/***/ }),
-
-/***/ 88:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag

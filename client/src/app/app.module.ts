@@ -7,19 +7,19 @@ import { Routing } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { CoursesComponent } from './components/courses/courses.component';
 import { HeaderComponent } from './partials/header/header.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { AddTaskComponent } from './partials/add-task/add-task.component';
+import { TaskItemComponent } from './partials/task-item/task-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CoursesComponent,
     HeaderComponent,
     FooterComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    TaskItemComponent
   ],
   imports: [
     BrowserModule,

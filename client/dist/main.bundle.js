@@ -5,7 +5,7 @@ webpackJsonp([1,4],{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeaderComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TaskItemComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16,21 +16,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var HeaderComponent = (function () {
-    function HeaderComponent() {
+var TaskItemComponent = (function () {
+    function TaskItemComponent() {
+        // Création des événement pour envoyer des données vers le composant home.component
+        this.sendDeleteTask = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
+        this.sendUpdateTask = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
     }
-    HeaderComponent.prototype.ngOnInit = function () { };
-    return HeaderComponent;
+    // Fonction pour supprimer une tâche
+    TaskItemComponent.prototype.deleteTask = function (event) {
+        // Renvoi de l'événement vers le composant home.component
+        this.sendDeleteTask.emit(event);
+    };
+    // Création d'une fonction pour mettre à jour une tâche
+    TaskItemComponent.prototype.updateTask = function (event) {
+        // Renvoi de l'événement vers le composant home.component
+        this.sendUpdateTask.emit(event);
+    };
+    return TaskItemComponent;
 }());
-HeaderComponent = __decorate([
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Input */])(),
+    __metadata("design:type", Object)
+], TaskItemComponent.prototype, "task", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */])(),
+    __metadata("design:type", Object)
+], TaskItemComponent.prototype, "sendDeleteTask", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */])(),
+    __metadata("design:type", Object)
+], TaskItemComponent.prototype, "sendUpdateTask", void 0);
+TaskItemComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
-        selector: 'app-header',
-        template: __webpack_require__(163),
-    }),
-    __metadata("design:paramtypes", [])
-], HeaderComponent);
+        selector: 'task-item',
+        template: __webpack_require__(163)
+    })
+], TaskItemComponent);
 
-//# sourceMappingURL=header.component.js.map
+//# sourceMappingURL=task-item.component.js.map
 
 /***/ }),
 
@@ -39,7 +62,7 @@ HeaderComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MongodbService; });
@@ -57,25 +80,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var MongodbService = (function () {
-    function MongodbService(http) {
+    function MongodbService(
+        // Initialisation du service Http
+        http) {
         this.http = http;
         // Définition des adresses de l'API => routes/api.js
-        // private getCategoriesUrl = 'https://dwsapp.fr/api/tasks';
-        // private editTaskUrl = 'https://dwsapp.fr/api/task';
         this.getCategoriesUrl = 'http://localhost:8080/api/tasks';
         this.editTaskUrl = 'http://localhost:8080/api/task';
     }
-    // Fonction pour ajouter une tâche dans la BDD MongoDb
+    // Fonction pour ajouter une tâche dans la BDD MongoDb => http.post
     MongodbService.prototype.addNewTask = function (newTask) {
         // Définition du header de la requête
         var myHeader = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
         myHeader.append('Content-Type', 'application/json');
-        // Ajout de l'objet newTask dans la BDD MongoDb
+        // Ajout de la tâche dans la BDD MongoDb
         return this.http.post(this.editTaskUrl, newTask, { headers: myHeader }).toPromise().then(this.dataFromMongodb).catch(this.handleError);
     };
     // Fonction pour supprimer une tâche => http.delete
     MongodbService.prototype.deleteTask = function (id) {
-        // Récupérer les données depuis la BDD MongoDb
+        // Suppression de la tâche de la BDD MongoDb
         return this.http.delete(this.editTaskUrl + '/' + id).toPromise().then(this.dataFromMongodb).catch(this.handleError);
     };
     // Fonction pour mettre à jour une tâche => http.put
@@ -83,10 +106,10 @@ var MongodbService = (function () {
         // Définition du header de la requête
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
         headers.append('Content-Type', 'application/json');
-        // Récupérer les données depuis la BDD MongoDb
+        // Mise à jour de la tâche dans la BDD MongoDb
         return this.http.put(this.editTaskUrl + '/' + task._id, task, { headers: headers }).toPromise().then(this.dataFromMongodb).catch(this.handleError);
     };
-    // Fonction pour afficher la liste des tâche depuis la BDD MongDb
+    // Fonction pour afficher la liste des tâche depuis la BDD MongDb => http.get
     MongodbService.prototype.getAllTasks = function () {
         // Récupérer les données depuis la BDD MongoDb
         return this.http.get(this.getCategoriesUrl).toPromise().then(this.dataFromMongodb).catch(this.handleError);
@@ -130,24 +153,6 @@ var environment = {
 
 /***/ }),
 
-/***/ 156:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(50)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
 /***/ 158:
 /***/ (function(module, exports) {
 
@@ -158,43 +163,94 @@ module.exports = "<app-header [@header]></app-header>\n\n<main [@main]>\n    <ro
 /***/ 159:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  courses works!\n</p>\n"
+module.exports = "<app-add-task (sendNewTaskData)=\"addNewTask($event)\" ></app-add-task>\n\n<section *ngIf=\"tasksCollection\">\n  <h2 (click)=\"toggleState()\" [@itemAnim]>{{taskList}}</h2>\n  <p *ngIf=\"tasksCollection.length == 0\" [@itemAnim]>{{emptyTaskList}}</p>\n\n  <article \n    *ngFor=\"let task of staggeringTask\" \n    class=\"taskListItem\" [ngClass]=\"{'erase' : task.eraseTask == true}\"\n    (@itemAnim.done)=\"doNext()\" [@itemAnim] \n  >\n\n    <task-item \n      [task]=\"task\" (sendDeleteTask)=\"deleteTask($event)\"\n      [task]=\"task\" (sendUpdateTask)=\"updateTask($event)\"\n    ></task-item>\n\n  </article>\n\n</section>"
 
 /***/ }),
 
 /***/ 160:
 /***/ (function(module, exports) {
 
-module.exports = "<app-add-task (sendNewTaskData)=\"addNewTask($event)\" ></app-add-task>\n\n<section *ngIf=\"tasksCollection\">\n  <h2 (click)=\"toggleState()\" [@itemAnim]>Liste des tâches</h2>\n  <p *ngIf=\"staggeringTask.length == 0\" [@itemAnim]>Rien à faire aujourd'hui, let's dance!</p>\n\n  <article *ngFor=\"let task of staggeringTask\" class=\"taskListItem\" (@itemAnim.done)=\"doNext()\" [@itemAnim]>\n\n    <h2 [ngClass]=\"{'taskIsDone': task.isDone == true }\">{{task.title}}</h2>\n    <i class=\"fa fa-check-circle\" aria-hidden=\"true\" [ngClass]=\"{'taskIsDone': task.isDone == true}\" (click)=\"updateTask(task)\"></i>\n    <i class=\"fa fa-trash\" aria-hidden=\"true\" (click)=\"deleteTask(task._id)\"></i>\n\n  </article>\n\n</section>"
+module.exports = "<section>\n\n  <h2 [ngClass]=\"{'errorAddTask': errorAddTask == true}\">{{addTask}}</h2>\n  <form action=\"#\" (submit)=\"addNewTask(newTask)\">\n    <input type=\"text\" name=\"newtask\" [(ngModel)]=\"newTask\" (focus)=\"errorAddTask = false\" >\n    <button type=\"submit\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></button>\n  </form>\n\n</section>"
 
 /***/ }),
 
 /***/ 161:
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n\n  <h2 [ngClass]=\"{'errorAddTask': errorAddTask == true}\">Ajouter une tâche</h2>\n  <form action=\"#\" (submit)=\"addNewTask(newTask)\">\n    <input type=\"text\" name=\"newtask\" [(ngModel)]=\"newTask\" (focus)=\"errorAddTask = false\" >\n    <button type=\"submit\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></button>\n  </form>\n\n</section>"
+module.exports = "<footer>\n  {{footer}} <a href=\"http://digitalworkshop.fr\" target=\"_blank\">DigitalWorkshop</a>\n</footer>"
 
 /***/ }),
 
 /***/ 162:
 /***/ (function(module, exports) {
 
-module.exports = "<footer>\n  2017 / Under MIT Licence by <a href=\"http://digitalworkshop.fr\" target=\"_blank\">DigitalWorkshop</a>\n</footer>"
+module.exports = "<header>\n  <h1>{{appTitle}} <span>{{appSubTitle}}</span></h1>\n</header>"
 
 /***/ }),
 
 /***/ 163:
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <h1>todos <span>MEANstack application</span></h1>\n</header>"
+module.exports = "<h2 [ngClass]=\"{'taskIsDone': task.isDone == true }\">{{task.title}}</h2>\n<i class=\"fa fa-check-circle\" aria-hidden=\"true\" [ngClass]=\"{'taskIsDone': task.isDone == true}\" (click)=\"updateTask(task)\"></i>\n<i class=\"fa fa-trash\" aria-hidden=\"true\" (click)=\"deleteTask(task._id); task.eraseTask = true\"></i>"
 
 /***/ }),
 
 /***/ 196:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(86);
+module.exports = __webpack_require__(85);
 
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppTranslate; });
+var AppTranslate = (function () {
+    function AppTranslate() {
+    }
+    Object.defineProperty(AppTranslate, "APP_TITLE", {
+        get: function () { return 'todos'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AppTranslate, "APP_SUBTITLE", {
+        get: function () { return 'MEANstack application'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AppTranslate, "ADD_TASK", {
+        get: function () { return 'Ajouter une tâche'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AppTranslate, "TASK_LIST", {
+        get: function () { return 'Liste des tâches'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AppTranslate, "EMPTY_TASK_LIST", {
+        get: function () { return 'Rien à faire aujourd\'hui, let\'s dance!'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(AppTranslate, "FOOTER", {
+        get: function () { return '2017 / Under MIT licence by'; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    return AppTranslate;
+}());
+
+//# sourceMappingURL=app.translate.js.map
 
 /***/ }),
 
@@ -203,44 +259,9 @@ module.exports = __webpack_require__(86);
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoursesComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var CoursesComponent = (function () {
-    function CoursesComponent() {
-    }
-    CoursesComponent.prototype.ngOnInit = function () {
-    };
-    return CoursesComponent;
-}());
-CoursesComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
-        selector: 'app-courses',
-        template: __webpack_require__(159),
-        styles: [__webpack_require__(156)]
-    }),
-    __metadata("design:paramtypes", [])
-], CoursesComponent);
-
-//# sourceMappingURL=courses.component.js.map
-
-/***/ }),
-
-/***/ 60:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_mongodb_mongodb_service__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_translate__ = __webpack_require__(22);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -254,16 +275,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomeComponent = (function () {
-    function HomeComponent(
-        // Définition d'une variable pour utiliser le service
-        mongodbService) {
+    function HomeComponent(mongodbService) {
         this.mongodbService = mongodbService;
+        // Définition des variables
+        this.taskList = __WEBPACK_IMPORTED_MODULE_3__app_translate__["a" /* AppTranslate */].TASK_LIST;
+        this.emptyTaskList = __WEBPACK_IMPORTED_MODULE_3__app_translate__["a" /* AppTranslate */].EMPTY_TASK_LIST;
+        this.errorAddTask = false;
         // Variables nécessaires pour l'animation des tâches
         this.staggeringTask = [];
         this.next = 0;
-        this.errorAddTask = false;
-        this.animation = false;
     }
     // Fonction pour ajouter une tâche
     HomeComponent.prototype.addNewTask = function (taskTitle) {
@@ -273,7 +295,7 @@ var HomeComponent = (function () {
         // Appel de la fonction du service addNewTask()
         this.mongodbService.addNewTask(newTask).then(function (mongoNewTask) {
             // callBack => Actualiser la liste des tâches
-            _this.staggeringTask.push(mongoNewTask[(mongoNewTask.length - 1)]);
+            _this.showTasks();
             // callBack => Lancer l'animation des tâches
             _this.doNext();
         });
@@ -283,13 +305,7 @@ var HomeComponent = (function () {
         var _this = this;
         // Appel de la fonction du service deleteTask()
         this.mongodbService.deleteTask(id).then(function (data) {
-            for (var i = 0; i < _this.staggeringTask.length; i++) {
-                if (_this.staggeringTask[i]._id == id) {
-                    _this.staggeringTask.splice(i, 1);
-                }
-            }
-            // callBack => Actualiser la liste des tâches
-            // this.updateTasks();
+            _this.updateTasks();
         });
     };
     // Fonction pour mettre à jour une tâche
@@ -324,7 +340,9 @@ var HomeComponent = (function () {
         // Appel de la fonction du service getAllTasks()
         this.mongodbService.getAllTasks().then(function (data) {
             // callBack => Mettre à jour les données dans la vue
-            _this.staggeringTask = data;
+            _this.tasksCollection = data;
+            // callBack => Lancer l'animation des tâches
+            _this.doNext();
         });
     };
     // Création d'une fonction pour animer la liste de tâches
@@ -343,7 +361,7 @@ var HomeComponent = (function () {
 HomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-home',
-        template: __webpack_require__(160),
+        template: __webpack_require__(159),
         // Ajout du service dans le décorateur
         providers: [__WEBPACK_IMPORTED_MODULE_2__services_mongodb_mongodb_service__["a" /* MongodbService */]],
         // Définition des animations
@@ -362,7 +380,7 @@ var _a;
 
 /***/ }),
 
-/***/ 85:
+/***/ 84:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -371,19 +389,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 85;
+webpackEmptyContext.id = 84;
 
 
 /***/ }),
 
-/***/ 86:
+/***/ 85:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(102);
 
 
@@ -397,12 +415,12 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 95:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_animations__ = __webpack_require__(32);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -446,22 +464,22 @@ AppComponent = __decorate([
 
 /***/ }),
 
-/***/ 96:
+/***/ 95:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser_animations__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_courses_courses_component__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__partials_header_header_component__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__partials_footer_footer_component__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_add_task_add_task_component__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser_animations__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__partials_header_header_component__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__partials_footer_footer_component__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__partials_add_task_add_task_component__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_task_item_task_item_component__ = __webpack_require__(100);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -491,10 +509,10 @@ AppModule = __decorate([
         declarations: [
             __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__components_courses_courses_component__["a" /* CoursesComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__partials_header_header_component__["a" /* HeaderComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__partials_footer_footer_component__["a" /* FooterComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__partials_add_task_add_task_component__["a" /* AddTaskComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__partials_header_header_component__["a" /* HeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__partials_footer_footer_component__["a" /* FooterComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__partials_add_task_add_task_component__["a" /* AddTaskComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__partials_task_item_task_item_component__["a" /* TaskItemComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -512,25 +530,19 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 97:
+/***/ 96:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_home_home_component__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_courses_courses_component__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_home_home_component__ = __webpack_require__(59);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Routing; });
-
 
 
 var appRoutes = [
     {
         path: '',
         component: __WEBPACK_IMPORTED_MODULE_1__components_home_home_component__["a" /* HomeComponent */]
-    },
-    {
-        path: 'courses/:link',
-        component: __WEBPACK_IMPORTED_MODULE_2__components_courses_courses_component__["a" /* CoursesComponent */]
     }
 ];
 var Routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* RouterModule */].forRoot(appRoutes);
@@ -538,11 +550,12 @@ var Routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* RouterModule 
 
 /***/ }),
 
-/***/ 98:
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_translate__ = __webpack_require__(22);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddTaskComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -554,24 +567,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AddTaskComponent = (function () {
     function AddTaskComponent() {
+        // Définition des variables
+        this.addTask = __WEBPACK_IMPORTED_MODULE_1__app_translate__["a" /* AppTranslate */].ADD_TASK;
         this.errorAddTask = false;
+        // Output
+        // Création des événement pour envoyer des données vers le composant home.component
         this.sendNewTaskData = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["r" /* EventEmitter */]();
     }
+    // Création d'une fonction pour ajouter une tâche
     AddTaskComponent.prototype.addNewTask = function (event) {
         if (this.newTask == undefined) {
             // Afficher le message d'erreur
             this.errorAddTask = true;
         }
         else {
-            // Envoyer les données
+            // Renvoi de l'événement vers le composant home.component
             this.sendNewTaskData.emit(this.newTask);
             // Vider le formulaire
             document.getElementsByTagName('form')[0].reset();
         }
     };
-    AddTaskComponent.prototype.ngOnInit = function () { };
     return AddTaskComponent;
 }());
 __decorate([
@@ -581,12 +599,44 @@ __decorate([
 AddTaskComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
         selector: 'app-add-task',
-        template: __webpack_require__(161)
-    }),
-    __metadata("design:paramtypes", [])
+        template: __webpack_require__(160)
+    })
 ], AddTaskComponent);
 
 //# sourceMappingURL=add-task.component.js.map
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_translate__ = __webpack_require__(22);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FooterComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var FooterComponent = (function () {
+    function FooterComponent() {
+        // Définition des variables
+        this.footer = __WEBPACK_IMPORTED_MODULE_1__app_translate__["a" /* AppTranslate */].FOOTER;
+    }
+    return FooterComponent;
+}());
+FooterComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+        selector: 'app-footer',
+        template: __webpack_require__(161)
+    })
+], FooterComponent);
+
+//# sourceMappingURL=footer.component.js.map
 
 /***/ }),
 
@@ -595,33 +645,32 @@ AddTaskComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FooterComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_translate__ = __webpack_require__(22);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeaderComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 
-var FooterComponent = (function () {
-    function FooterComponent() {
+
+var HeaderComponent = (function () {
+    function HeaderComponent() {
+        // Définition des varaibles
+        this.appTitle = __WEBPACK_IMPORTED_MODULE_1__app_translate__["a" /* AppTranslate */].APP_TITLE;
+        this.appSubTitle = __WEBPACK_IMPORTED_MODULE_1__app_translate__["a" /* AppTranslate */].APP_SUBTITLE;
     }
-    FooterComponent.prototype.ngOnInit = function () {
-    };
-    return FooterComponent;
+    return HeaderComponent;
 }());
-FooterComponent = __decorate([
+HeaderComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
-        selector: 'app-footer',
-        template: __webpack_require__(162)
-    }),
-    __metadata("design:paramtypes", [])
-], FooterComponent);
+        selector: 'app-header',
+        template: __webpack_require__(162),
+    })
+], HeaderComponent);
 
-//# sourceMappingURL=footer.component.js.map
+//# sourceMappingURL=header.component.js.map
 
 /***/ })
 
