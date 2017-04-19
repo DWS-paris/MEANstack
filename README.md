@@ -1,10 +1,10 @@
 # Todos - MEAN stack
 
-Ce projet à été réalisé dans le cadre d'une autoformation de à la téchnoligie MEAN stack. Pour lancer ce projet vous devez avoir installer MongoDb installé et configuré sur votre machine.
+Ce projet à été réalisé dans le cadre d'une autoformation à la téchnoligie MEAN stack. Pour lancer ce projet vous devez avoir installer MongoDb installé et configuré sur votre machine.
 
 ## Mise en route du projet
 
-Les instructions sont en cour de rédaciton
+Les instructions sont en cour de rédaction
 
 ## Version en ligne
 
