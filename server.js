@@ -9,6 +9,9 @@
     var port = 8080;
     var app = express();
 
+// Configuration de MongoDB
+    // let mongo = require('mongodb');
+
 // Moteur de rendu
     app.set('views', path.join(__dirname, 'client/dist'));
     app.set('view engine', 'ejs');

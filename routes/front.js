@@ -9,4 +9,4 @@ router.get('/courses/:link', (req, res, next) => {
     res.render('index.html');
 });
 
-module.exports = router;
+module.exports = router; 

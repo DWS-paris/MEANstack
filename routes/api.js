@@ -1,20 +1,36 @@
 let express = require('express');
 let router = express.Router();
-let mongojs = require('mongojs');
 
-let db = mongojs('mongodb://mrRobot:180879mdpjul@ds139969.mlab.com:39969/tasks-list', ['tasks']);
+let mongodb = require('mongodb');
+let ObjectId = mongodb.ObjectID;
+let MongoClient = mongodb.MongoClient;
+let mongodbUrl = 'mongodb://localhost:27017/tasks';
 
-// Afficher la liste des tâches => http.get
+
 router.get('/tasks', (req, res, next) => {
-    db.tasks.find( (err, tasks) => {
+
+    MongoClient.connect(mongodbUrl, (err, db) =>{
 
         if(err){
-            res.send(err);
-        }
-        res.json(tasks);
+            console.log('error connect', err)
+        
+        } else{
+            db.collection('list').find().toArray((err, tasks) => {
 
-    });
+                if(err){ 
+                    res.send(err)
+
+                } else{ 
+                    res.json(tasks)
+                }
+            })
+        }
+
+        db.close();
+    })
+
 });
+
 
 // Ajouter une tâche => http.post
 router.post('/task', (req, res, next) => {
@@ -25,23 +41,56 @@ router.post('/task', (req, res, next) => {
             "error": "Bad Data"
         });
     } else {
-        db.tasks.save(task, function(err, task){
+
+        MongoClient.connect(mongodbUrl, (err, db) =>{
+
             if(err){
-                res.send(err);
+                console.log('error connect', err)
+            
+            } else{
+                db.collection('list').insert([task], (err, data) => {
+
+                    if(err){
+                        console.log('error')
+
+                    } else{
+                        res.redirect('tasks')
+                    }
+
+                })
             }
-            res.json(task);
-        });
+
+            db.close();
+        })
     }
 });
 
 // Supprimer une tâche
 router.delete('/task/:id', function(req, res, next){
-    db.tasks.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
+
+    console.log(req.params.id)
+
+    MongoClient.connect(mongodbUrl, (err, db) =>{
+
         if(err){
-            res.send(err);
+            console.log('error connect', err)
+        
+        } else{
+            db.collection('list').remove({ _id: new ObjectId(req.params.id) }, (err, data) => {
+
+                if(err){
+                    console.log('error')
+
+                } else{
+                    console.log("ok")
+                }
+
+            })
         }
-        res.json(task);
-    });
+
+        db.close();
+    })
+
 });
 
 // Mettre à jour une tâche
@@ -62,13 +111,29 @@ router.put('/task/:id', (req, res, next) => {
         res.json({
             "error":"Bad Data"
         });
+
     } else {
-        db.tasks.update({_id: mongojs.ObjectId(req.params.id)},updTask, {}, (err, task) => {
-        if(err){
-            res.send(err);
-        }
-        res.json(task);
-    });
+
+        MongoClient.connect(mongodbUrl, (err, db) =>{
+
+            if(err){
+                console.log('error connect', err)
+            
+            } else{
+                db.collection('list').update({ _id: new ObjectId(req.params.id) },updTask, {}, (err, data) => {
+
+                    if(err){
+                        console.log('error')
+
+                    } else{
+                        console.log("ok")
+                    }
+
+                })
+            }
+
+            db.close();
+        })
     }
 });
 
