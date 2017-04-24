@@ -12,9 +12,7 @@ Cette application utilise des versions récentes (avril 2017) des différents fr
 
 <br /><br />
 
-## Mise en route du projet
-
-### Installation/Configuration
+## Installation/Configuration
 
 Cloner ce repo puis créer un dossier `data` pour héberger la base de données MongoDb.
 ```
@@ -53,9 +51,7 @@ Ouvrir une nouvelle fenêtre du terminal pour compiler l'application Angular la 
 cd path/to/myTaskList/client
 ng build --watch
 ```
-
-
-
+<br /><br />
 
 
 ## License
