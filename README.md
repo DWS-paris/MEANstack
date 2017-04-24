@@ -29,7 +29,7 @@ mongod
 ```
 <br />
 
-Ouvrir une nouvelle fenêtre du terminal pour lancer le shell MongoDb et crer une collection `tasks`
+Ouvrir une nouvelle fenêtre du terminal pour lancer le shell MongoDb et créer une collection `tasks`
 ```
 mongo
 db.createCollection("tasks")
