@@ -8,6 +8,8 @@ Projet réalisé dans le cadre de la mise en place d'un projet de formation à l
 - [NodeJS](https://nodejs.org/en/)
 - [NodeMon](https://nodemon.io/)
 
+<br>
+
 > Cette application utilise des versions récentes (avril 2017) des différents frameworks, vous devez les installer ou les mettre à jour pour utiliser ce projet.
 
 <br /><br />
