@@ -14,6 +14,12 @@ Projet réalisé dans le cadre de la mise en place d'un projet de formation à l
 
 <br /><br />
 
+## Supports
+Un Wiki a été créé pour vous aider à développer vous même cette application, vous pouvez [cliquer ici](https://github.com/DWS-paris/MEANstack/wiki) pour accéder au support ou suivre l'installation ci-dessous.
+> Ce support fait partie d'un projet global de formation à la technologie MEANstack.
+
+<br /><br />
+
 ## Installation/Configuration
 
 Cloner ce repo puis créer un dossier `data` pour héberger la base de données MongoDb.
