@@ -12,8 +12,6 @@
 
 // Moteur de rendu
     app.set('views', path.join(__dirname, 'client/dist'));
-    app.set('view engine', 'ejs');
-    app.engine('html', require('ejs').renderFile);
 
 // Dossier static
     app.use(express.static(path.join(__dirname, 'client/dist')));
