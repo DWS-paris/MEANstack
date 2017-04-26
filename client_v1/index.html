@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Quickstart NodeJS, ExpressJS &amp; MongoDB</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Quickstart <span>NodeJS, ExpressJS &amp; MongoDB</span></h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>
+                    Ajouter une tâche 
+                    <span class="errorAddTask">Champ obligatoire</span>
+                    <span class="ajaxError">Problème de connexion, Veuillez recommencer</span>
+                </h2>
+                <form action="/api/task" method="post">
+                    <input type="text" name="title">
+                    <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                </form>
+            </section>
+            <section></section>
+            
+        </main>
+
+        <footer>MIT &copy; Julien Noyer - <a href="http://www.digitalworkshop.fr" target="_blank">digitalworkshop.fr</a></footer>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
