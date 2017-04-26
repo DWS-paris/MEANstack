@@ -10,7 +10,7 @@
     let app = express();
 
 
-// Moteur de rendu
+// Dossier statique de la partie front
     app.set('views', path.join(__dirname, 'client/dist'));
 
 // Dossier static
