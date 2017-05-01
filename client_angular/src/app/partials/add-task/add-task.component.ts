@@ -8,9 +8,9 @@ templateUrl: './add-task.component.html'
 export class AddTaskComponent {
 
   // Définition des variables
-    private addTask = AppTranslate.ADD_TASK;
-    private newTask: string;
-    private errorAddTask: boolean = false;
+    public addTask = AppTranslate.ADD_TASK;
+    public newTask: string;
+    public errorAddTask: boolean = false;
 
 
 

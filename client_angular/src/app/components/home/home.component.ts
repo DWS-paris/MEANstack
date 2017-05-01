@@ -24,22 +24,22 @@ export class HomeComponent implements OnInit {
   constructor( private mongodbService: MongodbService ) {}
 
   // Définition des variables
-    private taskList = AppTranslate.TASK_LIST;
-    private emptyTaskList = AppTranslate.EMPTY_TASK_LIST;
-    private title: string;
-    private tasksCollection: any[];
-    private singleTask: any;
-    private errorAddTask: boolean = false;
+    public taskList = AppTranslate.TASK_LIST;
+    public emptyTaskList = AppTranslate.EMPTY_TASK_LIST;
+    public title: string;
+    public tasksCollection: any[];
+    public singleTask: any;
+    public errorAddTask: boolean = false;
 
     // Variables nécessaires pour l'animation des tâches
-    private staggeringTask: any[] = [];
-    private next: number = 0;
+    public staggeringTask: any[] = [];
+    public next: number = 0;
 
   
 
 
   // Fonction pour ajouter une tâche
-    private addNewTask(taskTitle: any){
+    public addNewTask(taskTitle: any){
 
       // Défintion de l'objet newTask
       let newTask = { title: taskTitle, isDone: false }
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
 
 
   // Fonction pour afficher les tâches
-    private showTasks(){
+    public showTasks(){
 
       // Appel de la fonction du service getAllTasks()
       this.mongodbService.getAllTasks().then(data => {
@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
     }
 
   // Fonction pour mettre à jour la liste de tâches
-    private updateTasks(){
+    public updateTasks(){
 
       // Appel de la fonction du service getAllTasks()
       this.mongodbService.getAllTasks().then(data => {
@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit {
 
 
   // Création d'une fonction pour animer la liste de tâches
-    private doNext(){
+    public doNext(){
 
       if(this.next < this.tasksCollection.length) {
         this.staggeringTask.push(this.tasksCollection[this.next++]);

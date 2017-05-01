@@ -8,6 +8,6 @@ import { AppTranslate } from '../../app.translate';
 export class FooterComponent {
 
   // Définition des variables
-    private footer = AppTranslate.FOOTER;
+    public footer = AppTranslate.FOOTER;
 
 }

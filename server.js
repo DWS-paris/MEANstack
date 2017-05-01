@@ -11,8 +11,8 @@
 
 
 // Dossier statique de la partie front
-    app.set('views', path.join(__dirname, 'client/dist'));
-    app.use(express.static(path.join(__dirname, 'client/dist')));
+    app.set('views', path.join(__dirname, 'www'));
+    app.use(express.static(path.join(__dirname, 'www')));
 
 // Body Parser
     app.use(bodyParser.json());
