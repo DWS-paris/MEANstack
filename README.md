@@ -51,7 +51,7 @@ db.createCollection("tasks")
 > Le serveur de base de données doit toujours rester actif, le shell ne sert qu'à créer la collection à utiliser dans l'application.
 <br />
 
-Ouvrir une nouvelle fenêtre du terminal pour lancer le serveur NodeJs de l'application : la commande `nodemo` permet relancer le serveur en cas de changement.
+Ouvrir une nouvelle fenêtre du terminal pour lancer le serveur NodeJs de l'application : la commande `nodemo` est configurer dans le fichier `package.json` pour permettre de relancer le serveur en cas de changement.
 ```
 cd path/to/myTaskList
 
