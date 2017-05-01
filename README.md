@@ -55,15 +55,15 @@ Ouvrir une nouvelle fenêtre du terminal pour lancer le serveur NodeJs de l'appl
 ```
 cd path/to/myTaskList
 
-nodemon server.js
+npm start
 ```
 <br />
 
 Ouvrir une nouvelle fenêtre du terminal pour compiler l'application Angular la commande `--watch` permet de relancer la compilation en cas de changement.
 ```
-cd path/to/myTaskList/client
+cd path/to/myTaskList/client_angular
 
-ng build --watch
+ng build -prod --output-path ../www --watch
 ```
 <br /><br />
 
