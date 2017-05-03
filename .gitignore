@@ -1,4 +1,5 @@
 node_modules/
 data/
 client/
-client_v1/
+client_angular/
+client_jquery
