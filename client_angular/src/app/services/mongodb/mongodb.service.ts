@@ -13,8 +13,8 @@ export class MongodbService {
   ) {}
 
   // Définition des adresses de l'API => routes/api.js
-  private getCategoriesUrl = 'http://localhost:8080/api/tasks';
-  private editTaskUrl = 'http://localhost:8080/api/task';
+  private getCategoriesUrl = 'https://nodejs-deployed-with-mongodb.dwsapp.fr/api/tasks';
+  private editTaskUrl = 'https://nodejs-deployed-with-mongodb.dwsapp.fr/api/task';
 
 
 
